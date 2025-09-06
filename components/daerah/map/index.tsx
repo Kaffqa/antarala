@@ -32,6 +32,37 @@ const Map = () => {
     setIsCrossfading(true)
   }
 
+  const scrollToSlider = () => {
+    // Use the global function if available, otherwise fallback to direct approach
+    if (typeof window !== 'undefined' && (window as any).scrollToSlider) {
+      (window as any).scrollToSlider()
+    } else {
+      // Fallback: try to find and scroll to slider element
+      const attemptScroll = () => {
+        const sliderElement = document.getElementById('slider')
+        if (sliderElement) {
+          sliderElement.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          })
+          return true
+        }
+        return false
+      }
+
+      // Try immediate scroll first
+      if (!attemptScroll()) {
+        // If not found, try with increasing delays
+        const delays = [50, 100, 200, 500]
+        delays.forEach((delay) => {
+          setTimeout(() => {
+            attemptScroll()
+          }, delay)
+        })
+      }
+    }
+  }
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -111,28 +142,28 @@ const Map = () => {
               transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 }}
               className="flex flew-row flex-wrap lg:justify-center gap-3 sm:gap-4"
             >
-              <Button className={button} onMouseOver={() => swapTo("/daerah/Sumatra.svg")} onClick={() => setSelected("Sumatra")}>
+              <Button className={button} onMouseOver={() => swapTo("/daerah/Sumatra.svg")} onClick={() => { setSelected("Sumatra"); scrollToSlider(); }}>
                 Sumatra
               </Button>
-              <Button className={button} onMouseOver={() => swapTo("/daerah/Jawa.svg")} onClick={() => setSelected("Jawa")}>
+              <Button className={button} onMouseOver={() => swapTo("/daerah/Jawa.svg")} onClick={() => { setSelected("Jawa"); scrollToSlider(); }}>
                 Jawa
               </Button>
-              <Button className={button} onMouseOver={() => swapTo("/daerah/Kalimantan.svg")} onClick={() => setSelected("Kalimantan")}>
+              <Button className={button} onMouseOver={() => swapTo("/daerah/Kalimantan.svg")} onClick={() => { setSelected("Kalimantan"); scrollToSlider(); }}>
                 Kalimantan
               </Button>
-              <Button className={button} onMouseOver={() => swapTo("/daerah/Bali.svg")} onClick={() => setSelected("Bali")}>
+              <Button className={button} onMouseOver={() => swapTo("/daerah/Bali.svg")} onClick={() => { setSelected("Bali"); scrollToSlider(); }}>
                 Bali
               </Button>
-              <Button className={button} onMouseOver={() => swapTo("/daerah/Sulawesi.svg")} onClick={() => setSelected("Sulawesi")}>
+              <Button className={button} onMouseOver={() => swapTo("/daerah/Sulawesi.svg")} onClick={() => { setSelected("Sulawesi"); scrollToSlider(); }}>
                 Sulawesi
               </Button>
-              <Button className={button} onMouseOver={() => swapTo("/daerah/Papua.svg")} onClick={() => setSelected("Papua")}>
+              <Button className={button} onMouseOver={() => swapTo("/daerah/Papua.svg")} onClick={() => { setSelected("Papua"); scrollToSlider(); }}>
                 Papua
               </Button>
-              <Button className={button} onMouseOver={() => swapTo("/daerah/NTT.svg")} onClick={() => setSelected("NTT")}>
+              <Button className={button} onMouseOver={() => swapTo("/daerah/NTT.svg")} onClick={() => { setSelected("NTT"); scrollToSlider(); }}>
                 NTT
               </Button>
-              <Button className={button} onMouseOver={() => swapTo("/daerah/NTB.svg")} onClick={() => setSelected("NTB")}>
+              <Button className={button} onMouseOver={() => swapTo("/daerah/NTB.svg")} onClick={() => { setSelected("NTB"); scrollToSlider(); }}>
                 NTB
               </Button>
             </motion.div>

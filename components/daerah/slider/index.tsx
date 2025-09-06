@@ -158,6 +158,21 @@ const Example = () => {
     setIsMounted(true);
   }, []);
 
+  // Expose scroll function globally for the map component
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).scrollToSlider = () => {
+        const sliderElement = document.getElementById('slider')
+        if (sliderElement) {
+          sliderElement.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          })
+        }
+      }
+    }
+  }, []);
+
   if (!info) {
     return null;
   }
@@ -206,15 +221,37 @@ const HorizontalScrollCarousel = ({ info }: { info: IslandInfo }) => {
   const slide2Ref = useRef(null);
   const slide3Ref = useRef(null);
   
-  // Check if slides are in view
-  const slide1InView = useInView(slide1Ref, { once: true, margin: "-100px" });
-  const slide2InView = useInView(slide2Ref, { once: true, margin: "-100px" });
-  const slide3InView = useInView(slide3Ref, { once: true, margin: "-100px" });
+  // State to track animation triggers
+  const [animationKey, setAnimationKey] = useState(0);
+  
+  // Check if slides are in view - remove once: true to allow re-triggering
+  const slide1InView = useInView(slide1Ref, { once: false, margin: "-100px" });
+  const slide2InView = useInView(slide2Ref, { once: false, margin: "-100px" });
+  const slide3InView = useInView(slide3Ref, { once: false, margin: "-100px" });
+
+  // Reset animations when scrolling back up
+  useEffect(() => {
+    const handleScroll = () => {
+      const sliderElement = document.getElementById('slider');
+      if (sliderElement) {
+        const rect = sliderElement.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        // If slider comes back into view, reset animations
+        if (isVisible) {
+          setAnimationKey(prev => prev + 1);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const x = useTransform(scrollYProgress, [0, 1], ["1%", "-67%"]);
 
   return (
-    <section ref={targetRef} className="relative h-[250vh] bg-[#333E24]">
+    <section id="slider" ref={targetRef} className="relative h-[250vh] bg-[#333E24]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <motion.div style={{ x }} className="flex sticky top-0 h-screen">
 
@@ -250,16 +287,16 @@ const HorizontalScrollCarousel = ({ info }: { info: IslandInfo }) => {
           </div>
 
           {/* 2 */}
-          <div ref={slide2Ref} className="w-screen h-screen relative px-4 sm:px-6 lg:px-8 flex flex-col xl:flex-row justify-center items-center gap-4 sm:gap-6 lg:gap-8">
+          <div ref={slide2Ref} className="w-screen h-screen relative px-4 sm:px-6 lg:px-8 flex flex-col xl:flex-row justify-center items-center gap-6 sm:gap-8 lg:gap-12 xl:gap-16">
 
             {/* Card 1 */}
             <motion.div
-              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6"
+              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full max-w-sm sm:max-w-md lg:max-w-lg"
               initial={{ opacity: 0, x: -150, y: 50, scale: 0.8 }}
               animate={slide2InView ? { opacity: 1, x: 0, y: 0, scale: 1 } : { opacity: 0, x: -150, y: 50, scale: 0.8 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <Card className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg py-4 sm:py-6 bg-[#FAF4E1] text-[#333E24] transform rotate-2 sm:rotate-4 lg:rotate-8 shadow-xl">
+              <Card className="w-full py-4 sm:py-6 bg-[#FAF4E1] text-[#333E24] transform rotate-2 sm:rotate-4 lg:rotate-8 shadow-xl">
                 <CardContent className="space-y-4 sm:space-y-6">
                   <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72">
                     <Image
@@ -275,12 +312,12 @@ const HorizontalScrollCarousel = ({ info }: { info: IslandInfo }) => {
                 </CardContent>
               </Card>
 
-              <motion.svg 
-                width="145" 
-                height="102" 
-                viewBox="0 0 145 102" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg" 
+              <motion.svg
+                width="145"
+                height="102"
+                viewBox="0 0 145 102"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
                 className="hidden sm:block"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={slide2InView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
@@ -292,12 +329,12 @@ const HorizontalScrollCarousel = ({ info }: { info: IslandInfo }) => {
 
             {/* Card 2 */}
             <motion.div
-              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6"
+              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full max-w-sm sm:max-w-md lg:max-w-lg"
               initial={{ opacity: 0, y: 100, scale: 0.8 }}
               animate={slide2InView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 100, scale: 0.8 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             >
-              <Card className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg py-4 sm:py-6 bg-[#FAF4E1] text-[#333E24] transform -rotate-2 sm:-rotate-4 lg:-rotate-8 shadow-xl">
+              <Card className="w-full py-4 sm:py-6 bg-[#FAF4E1] text-[#333E24] transform -rotate-2 sm:-rotate-4 lg:-rotate-8 shadow-xl">
                 <CardContent className="space-y-4 sm:space-y-6">
                   <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72">
                     <Image
@@ -313,11 +350,11 @@ const HorizontalScrollCarousel = ({ info }: { info: IslandInfo }) => {
                 </CardContent>
               </Card>
 
-              <motion.svg 
-                width="193" 
-                height="124" 
-                viewBox="0 0 193 124" 
-                fill="none" 
+              <motion.svg
+                width="193"
+                height="124"
+                viewBox="0 0 193 124"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="hidden sm:block"
                 initial={{ opacity: 0, scale: 0 }}
@@ -330,12 +367,12 @@ const HorizontalScrollCarousel = ({ info }: { info: IslandInfo }) => {
 
             {/* Card 3 */}
             <motion.div
-              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6"
+              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full max-w-sm sm:max-w-md lg:max-w-lg"
               initial={{ opacity: 0, x: 150, y: -50, scale: 0.8 }}
               animate={slide2InView ? { opacity: 1, x: 0, y: 0, scale: 1 } : { opacity: 0, x: 150, y: -50, scale: 0.8 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
             >
-              <Card className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg py-4 sm:py-6 bg-[#FAF4E1] text-[#333E24] transform rotate-2 sm:rotate-4 lg:rotate-12 shadow-xl">
+              <Card className="w-full py-4 sm:py-6 bg-[#FAF4E1] text-[#333E24] transform rotate-2 sm:rotate-4 lg:rotate-12 shadow-xl">
                 <CardContent className="space-y-4 sm:space-y-6">
                   <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72">
                     <Image
