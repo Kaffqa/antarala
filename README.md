@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌏 Antarala
 
-## Getting Started
+**Antarala** adalah platform digital interaktif untuk menjelajahi kekayaan **Indonesia** dari ruang yang berbeda.  
+Melalui artikel, peta interaktif, dan mini game, pengguna diajak untuk mengenal **sejarah, budaya, tradisi, hingga kuliner** Nusantara secara menyenangkan.
 
-First, run the development server:
+> *Belajar memahami Indonesia dari ruang yang tak biasa.*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Fitur Utama
+
+- 🏠 **Homepage** – pengantar dan ajakan menjelajahi Indonesia  
+- 🗺️ **Daerah** – peta interaktif pulau-pulau besar di Indonesia (Sumatra, Jawa, Kalimantan, Papua, dll.) beserta informasi budaya yang ada di daerah tersebut 
+- 📚 **Bacaan** – artikel tentang sejarah, budaya, kuliner, tradisi unik, dan kearifan lokal dari berbagai daerah  
+- 🎮 **Mini Game** – permainan flip-card untuk mengenal tempat, makanan, dan budaya Indonesia dengan cara interaktif dan mengasah kekuatan memori pengguna
+- 🛠️ **CMS** - konten manajemen sistem dimana semua data artikel disimpan menggunakan prismic (headless cms)
+ 
+
+---
+
+## 📂 Struktur Proyek
+antarala/
+
+├── app/ # Routing dan halaman utama (Next.js App Router)
+
+├── components/ # Komponen UI reusable
+
+├── lib/ # Helper & konfigurasi
+
+├── public/ # Aset statis (gambar, ikon, dll.)
+
+├── styles/ # Styling (CSS/Tailwind/SCSS)
+
+├── prismicio.ts # Integrasi dengan Prismic CMS
+
+├── package.json
+
+└── README.md
+
+
+
+---
+
+### Prasyarat
+- Node.js 18+
+- npm / yarn / pnpm / bun
+
+  
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Langkah Menjalankan
+bash
+# Clone repository
+git clone https://github.com/davindakhrisna/antarala.git
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+cd antarala
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Install dependencies
+npm install
 
-## Learn More
+# Jalankan development server
+npm run dev
 
-To learn more about Next.js, take a look at the following resources:
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Akses aplikasi di http://localhost:3000
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📖 Sumber & Dokumentasi
+
+Next.js Docs
+
+Prismic CMS
+ – sistem manajemen konten untuk artikel
+
+TailwindCSS
+ – styling modern
+
+ 
+
+👥 Tim
+
+Kaffqa Tegar G.P
+
+Davinda Khrisna A
+
+Farros Abhista A
