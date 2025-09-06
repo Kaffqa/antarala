@@ -82,8 +82,8 @@ TailwindCSS
 
 👥 Tim
 
-Kaffqa Tegar G.P
+👑 Kaffqa Tegar G.P
 
-Davinda Khrisna A
+💻 Davinda Khrisna A
 
-Farros Abhista A
+🎨 Farros Abhista A
