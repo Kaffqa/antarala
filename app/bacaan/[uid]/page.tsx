@@ -3,7 +3,13 @@ import { createClient } from "@/prismicio";
 import { asText } from "@prismicio/client";
 import Artikel from "@/components/bacaan/view";
 
-export default async function ArtikelPage({ params }: { params: { uid: string } }) {
+interface PageProps {
+  params: {
+    uid: string;
+  };
+}
+
+export default async function ArtikelPage({ params }: PageProps) {
   const client = createClient();
   const doc = await client.getByUID("article", params.uid);
 
