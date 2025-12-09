@@ -161,7 +161,7 @@ const Example = () => {
   // Expose scroll function globally for the map component
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      (window as any).scrollToSlider = () => {
+      (window as unknown).scrollToSlider = () => {
         const sliderElement = document.getElementById('slider')
         if (sliderElement) {
           sliderElement.scrollIntoView({ 

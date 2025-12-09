@@ -88,7 +88,6 @@ export default function Navbar() {
   const pathname = usePathname()
   const specialRoutes = ["/daerah", "/bacaan", "/game"]
   const isSpecialPath = specialRoutes.some((route) => (pathname || "").startsWith(route))
-  const [language, setLanguage] = useState("EN")
   const [isScrolled, setIsScrolled] = useState(false)
   const [logo, setLogo] = useState("/logo-navbar.svg")
 

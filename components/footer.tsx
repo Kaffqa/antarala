@@ -102,7 +102,7 @@ export default function Footer() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <nav className="flex flex-wrap justify-center lg:justify-start gap-x-8 gap-y-3">
-              {navigationLinks.map((link, index) => (
+              {navigationLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -145,7 +145,7 @@ export default function Footer() {
             transition={{ duration: 0.8, delay: 1.0 }}
           >
             <div className="flex space-x-6">
-              {socialLinks.map((social, index) => (
+              {socialLinks.map((social) => (
                 <Link
                   key={social.href}
                   href={social.href}

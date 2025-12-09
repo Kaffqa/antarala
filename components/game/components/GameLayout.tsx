@@ -34,16 +34,15 @@ const GameLayout: React.FC = () => {
     if (matches === 10 && gameStarted) {
       setShowAttemptsPopup(true)
 
-      if (popupTimer) clearTimeout(popupTimer)
       const timer = setTimeout(() => {
         setShowAttemptsPopup(false)
         setGameCompleted(true)
       }, 5000)
       setPopupTimer(timer)
-    }
 
-    return () => {
-      if (popupTimer) clearTimeout(popupTimer)
+      return () => {
+        if (timer) clearTimeout(timer)
+      }
     }
   }, [matches, gameStarted])
 
@@ -216,9 +215,11 @@ const GameLayout: React.FC = () => {
                 <div className={`card-container ${card.flipped || card.matched ? "flipped" : ""}`}>
                   {/* Card Back */}
 <div className="card-face card-back flex justify-center items-center">
-  <img 
+  <Image
     src="/game/logo-t.svg" 
     alt="Logo T" 
+    width={64}
+    height={64}
     className="h-auto w-auto md:h-16" 
   />
 </div>
