@@ -1,7 +1,6 @@
 "use client";
 // Di komponen Artikel
 import Image from "next/image"
-import { Card } from "@/components/ui/card";
 import { useEffect } from "react";
 
 interface ArtikelProps {

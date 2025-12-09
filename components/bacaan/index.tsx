@@ -22,7 +22,6 @@ export default function BacaanPage() {
   const [articles, setArticles] = useState<Article[]>([])
   const [tags, setTags] = useState<string[]>([])
   const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const [tagCounts, setTagCounts] = useState<Record<string, number>>({})
   const [search, setSearch] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -63,9 +62,9 @@ export default function BacaanPage() {
           Boolean
         ) as string[]
         setTags(["Semua", ...allTags])
-        setTagCounts({ Semua: mapped.length, ...counts })
-      } catch (e: any) {
-        setError("Gagal memuat data. Coba muat ulang halaman.")
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Gagal memuat data. Coba muat ulang halaman."
+        setError(errorMessage)
       } finally {
         setLoading(false)
       }

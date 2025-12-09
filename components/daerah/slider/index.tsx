@@ -161,7 +161,7 @@ const Example = () => {
   // Expose scroll function globally for the map component
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      (window as unknown).scrollToSlider = () => {
+      (window as Window & { scrollToSlider?: () => void }).scrollToSlider = () => {
         const sliderElement = document.getElementById('slider')
         if (sliderElement) {
           sliderElement.scrollIntoView({ 
@@ -221,9 +221,6 @@ const HorizontalScrollCarousel = ({ info }: { info: IslandInfo }) => {
   const slide2Ref = useRef(null);
   const slide3Ref = useRef(null);
   
-  // State to track animation triggers
-  const [animationKey, setAnimationKey] = useState(0);
-  
   // Check if slides are in view - remove once: true to allow re-triggering
   const slide1InView = useInView(slide1Ref, { once: false, margin: "-100px" });
   const slide2InView = useInView(slide2Ref, { once: false, margin: "-100px" });
@@ -235,11 +232,12 @@ const HorizontalScrollCarousel = ({ info }: { info: IslandInfo }) => {
       const sliderElement = document.getElementById('slider');
       if (sliderElement) {
         const rect = sliderElement.getBoundingClientRect();
+        // Check if slider is in view
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-        
-        // If slider comes back into view, reset animations
+        // Animation state is tracked via useInView hooks on individual slides
         if (isVisible) {
-          setAnimationKey(prev => prev + 1);
+          // Animations will retrigger via useInView dependencies
+          return;
         }
       }
     };

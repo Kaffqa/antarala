@@ -34,8 +34,9 @@ const Map = () => {
 
   const scrollToSlider = () => {
     // Use the global function if available, otherwise fallback to direct approach
-    if (typeof window !== 'undefined' && (window as any).scrollToSlider) {
-      (window as any).scrollToSlider()
+    const globalWindow = window as Window & { scrollToSlider?: () => void }
+    if (typeof window !== 'undefined' && globalWindow.scrollToSlider) {
+      globalWindow.scrollToSlider()
     } else {
       // Fallback: try to find and scroll to slider element
       const attemptScroll = () => {

@@ -21,7 +21,6 @@ const GameLayout: React.FC = () => {
   const [attempts, setAttempts] = useState(0)
   const [gameCompleted, setGameCompleted] = useState(false)
   const [showAttemptsPopup, setShowAttemptsPopup] = useState(false)
-  const [popupTimer, setPopupTimer] = useState<NodeJS.Timeout | null>(null)
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({})
 
   useEffect(() => {
@@ -38,7 +37,6 @@ const GameLayout: React.FC = () => {
         setShowAttemptsPopup(false)
         setGameCompleted(true)
       }, 5000)
-      setPopupTimer(timer)
 
       return () => {
         if (timer) clearTimeout(timer)
